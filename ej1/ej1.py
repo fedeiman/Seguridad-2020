@@ -19,9 +19,13 @@ print(f"N es {N}")
 
 if not os.path.isfile(f"./output_{N}.txt"):
     print("Archivo no existe, lo creamos")
-    lists = list(combinations_with_replacement(CHARS, N))
-    formattedlist = [''.join(tup) for tup in lists]
-    with open(f"output_{N}.txt", 'w') as output:
-        output.write(str(formattedlist))
+    output = open(f"output_{N}.txt", 'w')
+    output.write("[")
+    for comb in combinations_with_replacement(CHARS, N):
+        # Escribimos uno por uno en vez de crear una lista y escribirla entera
+        # pq si no python se queda sin memoria
+        output.write(f"'{''.join(comb)}',")
+    output.write("]")
+    output.close()
 else:
     print("El archivo ya existe")
