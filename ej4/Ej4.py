@@ -16,7 +16,5 @@ for x in f1:
 for x in cutstr:
     if x.isdigit():
         digits.append(x)
-
-cutstr = []   
-collections.Counter(digits)
+        
 print '10 sufijos de digitos mas usados',collections.Counter(digits).most_common(10)
