@@ -1,0 +1,58 @@
+
+hashcat -m 0 hashes.txt rockyou-50.txt 
+
+Session..........: hashcat
+Status...........: Exhausted
+Hash.Name........: MD5
+Hash.Target......: hashes.txt
+Time.Started.....: Tue Sep  8 20:12:35 2020 (2 secs)
+Time.Estimated...: Tue Sep  8 20:12:37 2020 (0 secs)
+Guess.Base.......: File (rockyou-50.txt)
+Guess.Queue......: 1/1 (100.00%)
+Speed.#1.........:     6695 H/s (3.24ms) @ Accel:1024 Loops:1 Thr:1 Vec:8
+Recovered........: 8603/16532955 (0.05%) Digestss
+Remaining........: 16524352 (99.95%) Digests
+Recovered/Time...: CUR:N/A,N/A,N/A AVG:321898,19313882,463533161 (Min,Hour,Day)
+Progress.........: 9437/9437 (100.00%)
+Rejected.........: 0/9437 (0.00%)
+Restore.Point....: 9437/9437 (100.00%)
+Restore.Sub.#1...: Salt:0 Amplifier:0-1 Iteration:0-1
+Candidates.#1....: silviu -> august17
+
+hashcat -m 0 -a3 hashes.txt 1hs aprox
+Status...........: Running
+Hash.Name........: MD5
+Hash.Target......: hashes.txt
+Time.Started.....: Wed Sep  9 15:23:08 2020 (43 mins, 19 secs)
+Time.Estimated...: Wed Sep  9 23:39:46 2020 (7 hours, 33 mins)
+Guess.Mask.......: ?1?2?2?2?2?2?2 [7]
+Guess.Charset....: -1 ?l?d?u, -2 ?l?d, -3 ?l?d*!$@_, -4 Undefined 
+Guess.Queue......: 7/15 (46.67%)
+Speed.#1.........:  4506.6 kH/s (60.53ms) @ Accel:256 Loops:1024 Thr:1 Vec:8
+Recovered........: 5321783/16532955 (32.19%) Digests
+Remaining........: 11211172 (67.81%) Digests
+Recovered/Time...: CUR:7778,N/A,N/A AVG:9802,588146,14115510 (Min,Hour,Day)
+Progress.........: 12383748096/134960504832 (9.18%)
+Rejected.........: 0/12383748096 (0.00%)
+Restore.Point....: 153600/1679616 (9.14%)
+Restore.Sub.#1...: Salt:0 Amplifier:40704-40960 Iteration:0-256
+Candidates.#1....: M1t5l22 -> L4tnsmo
+
+hashcat -m 0 hashes.txt rockyou.txt  20 min aprox
+Session..........: hashcat
+Status...........: Exhausted
+Hash.Name........: MD5
+Hash.Target......: hashes.txt
+Time.Started.....: Wed Sep  9 16:31:02 2020 (27 secs)
+Time.Estimated...: Wed Sep  9 16:31:29 2020 (0 secs)
+Guess.Base.......: File (rockyou.txt)
+Guess.Queue......: 1/1 (100.00%)
+Speed.#1.........:   323.0 kH/s (1.22ms) @ Accel:1024 Loops:1 Thr:1 Vec:8
+Recovered........: 6042717/16532955 (36.55%) Digests
+Remaining........: 10490238 (63.45%) Digests
+Recovered/Time...: CUR:N/A,N/A,N/A AVG:264743,15884594,381230255 (Min,Hour,Day)
+Progress.........: 14344384/14344384 (100.00%)
+Rejected.........: 0/14344384 (0.00%)
+Restore.Point....: 14344384/14344384 (100.00%)
+Restore.Sub.#1...: Salt:0 Amplifier:0-1 Iteration:0-1
+Candidates.#1....: $HEX[206b6d3831303838] -> $HEX[042a0337c2a156616d6f732103]
