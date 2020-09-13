@@ -6,12 +6,11 @@
 
 ##### GitHub: https://github.com/fedeiman/Seguridad-2020
 
-###### EJ 1
-
+## Ejercicio 1
  Si considermos las palabras compuestas por los caracteres a..z,0..9 (36 caracteres si tomamos el alfabeto en ingles) y sabemos que los caracteres se pueden repetir entonces la formula que me indica cuantas palabras de largo N hay es $36^N$.  En el siguiente grafico podemos ver que esta funcion se hace muy grande muy rapido y asumiendo que toma 1 ms probar cada combinacion tenemos el tiempo en el eje $y$ y el N en el eje $x$.  Para $N=20$ tomaria $4.23599388 × 10^{20}$ años en probar todas las posibilidades.
  ![Grafico](https://i.ibb.co/4WXHb8q/Anotaci-n-2020-09-12-205603.png)
 
-###### EJ 2
+## Ejercicio 2
 
 Para resolver el ejercicio 2 lo primero a conocer es el tipo de hash, buscamos información sobre un par de tools que podríamos haber usado que nos brindarían información acerca del hash con el que estamos trabajando, pero al final no fue necesario, ya que investigando en internet, descubrimos que era un hash de tipo SHA1 de un dispositivo android, este hash para ser crackeado necesitaba de una salt la cual también encontramos en internet “f6d45822728ddb2c", investigando mas descubrimos que la password se trataba de una que contenía 8 dígitos decimales y por ende fue fácil descubrirla con la herramienta hashcat con el siguiente comando:
 
@@ -42,7 +41,7 @@ fuente: https://blog.wirhabenstil.de/2014/08/26/breaking-samsung-android-passwor
 La Hint del ejercicio por otro lado sugeria resolver el problema de una forma mas cerca a la fuerza bruta. Basicamente, el script dado como pista obtiene los modos de hashcat correspondientes para todos los hash y los deja listos para ser utilizados llamando a hashcat con el hash dado con cada uno de estos modos. Con "$" podemos agregarle al script la funcionalidad de correr hashcat con cada uno de los modos ya que el script como esta solo hace un echo del comando que deberiamos correr (pero no lo corre). En un script de bash $(commando) corre el comando dado en una shell distinta e introduce el output del comando donde se encontraba el $(comando), basicamente evalua la expresion despues del signo $.
 
 
-###### EJ 3
+## Ejercicio 3
 
 El proceso usado para obtener la diferencia entre las palabras del diccionario del Práctico 0 (ejercicio 5) y las listas del directorio Passwords de Seclists fue el siguiente:
 
@@ -62,7 +61,7 @@ Y por ultimo verificamos para cada palabra de "ekodict" si aparece en "wordlist"
 
 Para resolver el punto b se uso la misma función cambiando el path.
 
-###### EJ 4
+## Ejercicio 4
 
 Para resolver el ej 4, primero usamos pipal que es una herramienta que devuelve los datos pedidos. Los 3 diccionarios/listas del directorio Passwords de SecLists elegidos fueron: 10-million-password-list-top-10000.txt,
 
@@ -358,7 +357,7 @@ El script lee el archivo que le pasemos como path, elimina los caracteres "\n" d
 
 Para el punto "b", nos quedamos con los últimos 4 caracteres de cada palabra de la lista (eliminando el "\n") y guardamos estos 4 caracteres en una lista. luego verificamos si los últimos 4 caracteres son dígitos con el método de python isdigit() y finalmente con un método de la librería collections devolvemos los 10 sufijos de 4 dígitos más usados de dichas listas
 
-###### EJ 5
+## Ejercicio 5
 
 Para este ejercicio basicamente lo que hicimos fue armar un sistema de ecuaciones con las igualdades que conocemos que se dan a la hora de crear claves RSA. Nosotros sabiamos que:
  - $N_1 = P×Q$
@@ -377,13 +376,13 @@ Con estos datos simplemente era cuestion de hacer los calculos para obtener P, Q
  Una vez que obtuvimos los datos anteriores pudimos calcular el phi de cada una de las claves y con eso el inverso modular para calcular la clave privada de cada persona. Una vez que teniamos la clave privada decodificar el mensaje fue una cuestion de elevar el CipherText dado a la clave privada, luego convertir este decimal a hexadecimal y finalmente a ASCII para obtener el mensaje uniendo los tres mensajes:
 > "flag{n0_0n3_3xp3ct5_th3_sp4nish_inquisiti0n!}"
 
-###### EJ 6
+## Ejercicio 6
 
 En este ejercicio nuestra primera intencion fue la de bruteforcear la contraseña, pero depues de un tiempo nos dimos cuenta de que tardaba mucho cada conexion al servidor asi que probablemente no era al camino a seguir. Despues de correr varias veces la hint2 del ejercicio nos dimos cuenta de que el servidor tardaba mucho mas en cerrar la conexion cuando la letra enviada era la "G". Cuando medimos el tiempor pudimos ver que efectivamente con esta letra el servidor tardaba el doble (2 segundos" hasta que cerraba la conexion que con las otras letras. Esto nos llevo a creer que se trataba de un timing attack y efectivamente asi obtuvimos la siguiente letra a mano "a". Una vez que supimos que estabamos en el camino correcto armamos un script en python que iba probando cada palabra del abecedario y medía cuanto tardaba la conexion con el servidor, una vez que probaba con todo el abecedario se quedaba con el caracter que mas tiempo habia tardado y lo sumaba a la contraseña encontrada hasta el momento. Como a veces habia picos en el servidor, cada vez que se encuentra un nuevo maximo se vuelve a probar con el mismo caracter para ver que la latencia no haya sido casualidad. Despues de un tiempo (2 dias que la pasamos muy mal porque no funcionaba) tambien descubrimos que era mejor correr este ataque conectado al cable de red ya que el wifi parecia agregar mucha interferencia que arruinaba los resultados. Una vez conectados por el cable de red el programa adivino la contraseña "GaAVCK9r3K" en un tiempo aceptable.
 
 Para calcular el mejor y peor tiemp de este tipo de ataque importa el orden del abedecedario y que tanta inteligencia tiene nuestro script. En particular el que nosotros entregamos tiene un tiempo constante, ya que no corta hasta que probo todo el abecedario, esto lo hicimos asi ya que no podiamos asegurar que la interferencia fuese lo suficientemente chica como para shortcircuitear el programa, es decir, cortarlo cuando encuentre la siguiente letra. Si uno pudiese elmininar la mayoria de las interferencias y despues de varias corridas a mano pudimos ver que cada letra correcta parecia sumar un segundo a lo que tardaba el servidor en cortar la conexion, por lo tanto el mejor caso posible es si el abecedario de prueba esta ordenado con la password exacta al principio y tardaria $2+3+4+5+6+7+8+9+10 + 11 = 65$ segundos. En el peor caso posible, donde tiene que probar todas las posibilidades, y esta al final queda $1*61 + 2 *62 + 3 *62+4*62+5*62+6*62+7*62+8*62+9*62+10*62 + 11 = 3420$ segundos, es decir 57 minutos. Es importante notar que ambos de estos resultados son teoricos y no tienen en cuenta la interferencia en la red.
 
-###### EJ 7
+## Ejercicio 7
 
 El archivo hashes.txt tiene 16.532.955 y nosotros haciendo pruebas crackeamos 6.042.717 de las siguientes maneras:
 
