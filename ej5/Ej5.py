@@ -1,7 +1,3 @@
-import numpy as np
-import math
-from decimal import *
-
 def isqrt(x):
     """
    Calcula la raiz cuadrada entera de un x, como las claves rsa son enteros
