@@ -6,7 +6,10 @@
 
 ##### GitHub: https://github.com/fedeiman/Seguridad-2020
 
-  
+###### EJ 1
+
+ Si considermos las palabras compuestas por los caracteres a..z,0..9 (36 caracteres si tomamos el alfabeto en ingles) y sabemos que los caracteres se pueden repetir entonces la formula que me indica cuantas palabras de largo N hay es $36^N$.  En el siguiente grafico podemos ver que esta funcion se hace muy grande muy rapido y asumiendo que toma 1 ms probar cada combinacion tenemos el tiempo en el eje $y$ y el N en el eje $x$.  Para $N=20$ tomaria $4.23599388 × 10^{20}$ años en probar todas las posibilidades.
+ ![Grafico](https://i.ibb.co/4WXHb8q/Anotaci-n-2020-09-12-205603.png)
 
 ###### EJ 2
 
