@@ -39,6 +39,9 @@ Finalmente el PIN encontrado por hashcat luego de aproximadamente 2 hs de realiz
 
 fuente: https://blog.wirhabenstil.de/2014/08/26/breaking-samsung-android-passwordspin/
 
+La Hint del ejercicio por otro lado sugeria resolver el problema de una forma mas cerca a la fuerza bruta. Basicamente, el script dado como pista obtiene los modos de hashcat correspondientes para todos los hash y los deja listos para ser utilizados llamando a hashcat con el hash dado con cada uno de estos modos. Con "$" podemos agregarle al script la funcionalidad de correr hashcat con cada uno de los modos ya que el script como esta solo hace un echo del comando que deberiamos correr (pero no lo corre). En un script de bash $(commando) corre el comando dado en una shell distinta e introduce el output del comando donde se encontraba el $(comando), basicamente evalua la expresion despues del signo $.
+
+
 ###### EJ 3
 
 El proceso usado para obtener la diferencia entre las palabras del diccionario del Práctico 0 (ejercicio 5) y las listas del directorio Passwords de Seclists fue el siguiente:
