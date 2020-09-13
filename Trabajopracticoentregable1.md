@@ -355,7 +355,30 @@ El script lee el archivo que le pasemos como path, elimina los caracteres "\n" d
 
 Para el punto "b", nos quedamos con los últimos 4 caracteres de cada palabra de la lista (eliminando el "\n") y guardamos estos 4 caracteres en una lista. luego verificamos si los últimos 4 caracteres son dígitos con el método de python isdigit() y finalmente con un método de la librería collections devolvemos los 10 sufijos de 4 dígitos más usados de dichas listas
 
-  
+###### EJ 5
+
+Para este ejercicio basicamente lo que hicimos fue armar un sistema de ecuaciones con las igualdades que conocemos que se dan a la hora de crear claves RSA. Nosotros sabiamos que:
+ - $N_1 = P×Q$
+ - $N_2 = Q×R$
+ - $N_3 = P × R$
+
+Y despejando $P$ podemos ver que:
+
+ - $P = \sqrt{N_3 × N_1 \over N_2}$
+ 
+ - $Q = {N_2 \over {N_3 / P}}$
+ - $R = {N_3 \over P}$
+
+Con estos datos simplemente era cuestion de hacer los calculos para obtener P, Q y R. Aqui nos encontramos con algunos problemas en python ya que los $N_i$ eran muy grandes para entrar en un float y hacer las operaciones de raiz cuadrada y division. Para solucionarlo simplemente utilizamos el hecho de que los P, Q y R son enteros y utilizamos la dvision de enteros de python `//`
+ y una funcion que calcula la raiz cuadrada entera de un numero dado que encontramos en internet.
+ Una vez que obtuvimos los datos anteriores pudimos calcular el phi de cada una de las claves y con eso el inverso modular para calcular la clave privada de cada persona. Una vez que teniamos la clave privada decodificar el mensaje fue una cuestion de elevar el CipherText dado a la clave privada, luego convertir este decimal a hexadecimal y finalmente a ASCII para obtener el mensaje uniendo los tres mensajes:
+> "flag{n0_0n3_3xp3ct5_th3_sp4nish_inquisiti0n!}"
+
+###### EJ 6
+
+En este ejercicio nuestra primera intencion fue la de bruteforcear la contraseña, pero depues de un tiempo nos dimos cuenta de que tardaba mucho cada conexion al servidor asi que probablemente no era al camino a seguir. Despues de correr varias veces la hint2 del ejercicio nos dimos cuenta de que el servidor tardaba mucho mas en cerrar la conexion cuando la letra enviada era la "G". Cuando medimos el tiempor pudimos ver que efectivamente con esta letra el servidor tardaba el doble (2 segundos" hasta que cerraba la conexion que con las otras letras. Esto nos llevo a creer que se trataba de un timing attack y efectivamente asi obtuvimos la siguiente letra a mano "a". Una vez que supimos que estabamos en el camino correcto armamos un script en python que iba probando cada palabra del abecedario y medía cuanto tardaba la conexion con el servidor, una vez que probaba con todo el abecedario se quedaba con el caracter que mas tiempo habia tardado y lo sumaba a la contraseña encontrada hasta el momento. Como a veces habia picos en el servidor, cada vez que se encuentra un nuevo maximo se vuelve a probar con el mismo caracter para ver que la latencia no haya sido casualidad. Despues de un tiempo (2 dias que la pasamos muy mal porque no funcionaba) tambien descubrimos que era mejor correr este ataque conectado al cable de red ya que el wifi parecia agregar mucha interferencia que arruinaba los resultados. Una vez conectados por el cable de red el programa adivino la contraseña "GaAVCK9r3K" en un tiempo aceptable.
+
+Para calcular el mejor y peor tiemp de este tipo de ataque importa el orden del abedecedario y que tanta inteligencia tiene nuestro script. En particular el que nosotros entregamos tiene un tiempo constante, ya que no corta hasta que probo todo el abecedario, esto lo hicimos asi ya que no podiamos asegurar que la interferencia fuese lo suficientemente chica como para shortcircuitear el programa, es decir, cortarlo cuando encuentre la siguiente letra. Si uno pudiese elmininar la mayoria de las interferencias y despues de varias corridas a mano pudimos ver que cada letra correcta parecia sumar un segundo a lo que tardaba el servidor en cortar la conexion, por lo tanto el mejor caso posible es si el abecedario de prueba esta ordenado con la password exacta al principio y tardaria $2+3+4+5+6+7+8+9+10 + 11 = 65$ segundos. En el peor caso posible, donde tiene que probar todas las posibilidades, y esta al final queda $1*61 + 2 *62 + 3 *62+4*62+5*62+6*62+7*62+8*62+9*62+10*62 + 11 = 3420$ segundos, es decir 57 minutos. Es importante notar que ambos de estos resultados son teoricos y no tienen en cuenta la interferencia en la red.
 
 ###### EJ 7
 
