@@ -296,4 +296,4 @@ Restore.Sub.#1...: Salt:0 Amplifier:0-1 Iteration:0-1
 Candidates.#1....: $HEX[206b6d3831303838] -> $HEX
 [042a0337c2a156616d6f732103]
 
-Como conlcusion de este ejercicio vemos como tener un buen diccionario es la mejor forma de crackear hashes en cuanto a tiempo, pero de todas formas siempre tenesmos la fuerza bruta para ayudarnos.
+Como conlcusion de este ejercicio vemos como tener un buen diccionario es la mejor forma de crackear hashes en cuanto a tiempo y cantidad de hashes crackeados.
