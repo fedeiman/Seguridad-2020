@@ -1,3 +1,21 @@
+##### Ej 1
+###### A)
+Para obtener el secreto de bob lo primer que hicimos fue  ver las distintas respuestas que nos daba el sistema como respuesta a las distintas situaciones. Asi fue como notamos que el sistema nos devolvia "El usuario no existe" cuando no encontraba el usuario en la base de datos, "Se debe ingresar un usuario/contraseña" cuando no le pasabamos alguno de los datos y "Password incorrecta" cuando el usuario existia pero la password no era la correcta. Con esto empezamos a hacer pruebas con los vectores de ataque tipicos para una sql injection. Notamos que cuando el usuario era `' or 1=1 ---` y la contraseña cualqier cosa el sistema respondia que la contraseña era incorrecta, es decir aceptaba el usuario como valido lo cual nos indica que un sql injection era efectivamente el camino a seguir. En algun momento probando cosas pusimos como usuario `'union select user from users ---` lo cual nos llevo a una pantalla de debugueo por un error de sql que contenia todo el codigo de la aplicacion. Ya con el codigo del servidor fue cuestion de analizarlo para explotar alguna vulnerabilidad. Ahi notamos que el servidor que el servidor obtiene la sal, la password hasheada y el id en la misma query en la que podemos inyectar y que luego compara la pasword hasheada con la password que ingresamos hasheada. Lo que hicimos entonces fue generar un hash sha256 de la palabra "test" y forzamos a la query a devolver ese hash como constante y la sal vacia entonces con modificar la inyeccion para un usuario en particular pudimos obtener el secreto introduciendo "test" como contraseña. La query final que usamos para obtener el secreto de bob fue:` ' union SELECT id, "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08" , "" FROM users WHERE username = 'bob' ---`
+###### B)
+Para contar los usuarios hay en el sistema cambiamos un poco la query anterior. 	Sabemos que ese hash con la sal vacia va a funcionar para cualquier usuario y que a la hora de buscar el secreto de cada usuario el codigo hace `secrets[str(user_id)]` . Lo que hicimos entonces fue hacer que la query en vez de devolver el user id, que devuelva la cantidad de ids en la base de datos con COUNT, esto lleva al server a buscar un secreto con una key que no existe y nos lleva de vuelta a la pantalla de debuggeo diciendo que efectivamente fallo con la key=6, es decir hay 6 usuarios. La query utilizada fue: `' union SELECT COUNT(id), "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08" , "" FROM users`.
+
+###### C)
+Finalmente para saber que usuarios hay en el sistema podemos notar que el user_id no discrimina entre strings y ids asi que podemos usar un metodo como el anterior para obtener el valor y  modificando la clausula del where a not username = "bob" and not username = "eve" and not username = "mallory" y cada vez que encuentro un nuevo nombre agregarlo al where para que no me devuelva ese. La primer query fue `' union SELECT username, "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08" , "" FROM users WHERE NOT username = 'bob' AND NOT username="eve" AND NOT username="mallory"---` y para probar que realmente hay solo 6 usuarios en el sistema lo confirmamos cuando la siguiente query dio que no existia el usuario: `' union SELECT username, "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08" , "" FROM users WHERE NOT username = 'bob' AND NOT username="eve" AND NOT username="mallory" AND NOT username="cacho" AND NOT username="john" AND NOT username="kisio"---`. Finalmente los usuarios y sus secretos en la base son:
+
+ - bob: "Gate's Gm@Il Passw0rd R3m1nder: Ennyn Durin Aran Moria. Pedo Mellon a Minno. Im Narvi hain echant. Celebrimbor o Eregion teithant i thiw hin."
+- cacho: "i have no secrets""
+- eve: "Kaley Cuoco phone: 1-212-733-2323"
+- mallory: "se-html5-album-audio-player is broken"
+- john: "Coca-cola recipes: Carbonated water, sugar, natural flavorings, caffeine, phosphoric acid & naranpol flavor"
+- kisio: "The BUE System is unsafe or at least doubtful"
+
+(Los secretos de cada usuario fueron recuperados con el mismo metodo de bob cambiando el where a username="Nombre de usuario")
+
 ##### Ej 2
 Cuando entramos a la pagina pudimos ver una imagen que describia un sitio en construccion y ademas de eso el sitio setea una cookie profile.
 Al principio pensamos que era un tipo de jwt pero finalmente descubrimos que esta encodeada en base64 y obteniendo los siguientes datos:
@@ -35,6 +53,12 @@ Pensamos que se podia tratar de una vulnerabilidad en cuanto a la serializacion 
 
 Buscando como poder explotar esta vulnerabilidad encontramos el siguiente [link](https://mars-cheng.github.io/blog/2018/Vulnhub-Temple-of-Doom-1-Write-up/) con un paso a paso sobre como explotar un fallo de seguiridad muy similar al encontrado en esta pagina usando un reverse shell attack y asi es posible obtener permisos de root.
 
+##### Ej 4
+###### A)
+El problema principal de este codigo esta en la funcion de saneamiento. Como sabemos los headers de una request son totalmente manipulables, incluido el del idioma, por lo tanto esta en lo correcto de que esa informacion debe ser controlada de alguna forma, el problema esta en la forma en que lo hace, mezclado con lo que hace luego con la data. El codigo carga un archivo del filesystem dependiendo lo que esta en ese header,  no solo eso si no que lo hace de una forma bastante directa (modificando el string del path del archivo directamente y pegandole el header) y sin seguir ninguna recomendacion que uno encuentra en internet cuando uno busca esta situacion. Tambien usa una funcion custom para filtrar la entrada que lo unico que hace es remplazar "../" por "" obviamente en un intento de prevenir que se acceda a otro directorio fuera del esperado. El problema es que una simple request cuyo header de HTTP_ACCEPT_LANGUAGE sea "....//"  luego de pasar por la funcion de filtrado se convierte en "../" lo cual nos deja acceder a otros directorios. Si luego se puede hacer algo con ese archivo depende de la aplicacion en general y no es posible determinar si se expone el archivo pero por lo pronto con eso ya fue posible forzar al servidor a cargar un archivo que no deberia haber cargado.
+
+###### B)
+Para este caso la mejor solucion (y la mas recomendada) parece ser usar la funcion basename de php que toma un string de la forma "../../../passwd" y devuelve "passwd" es decir si recibe un path devuelve solo el nombre final y si recibe solo un nombre devuleve el mismo lo cual mantiene la compatibilidad actual. Entonces el unico cambio seria en vez de llamar `$sanitizedLang = $this->sanitizeLang($lang)` ejecutar `$sanitizedLang = $basename($lang)`, esto deberia prevenir este tipo de ataque en particular.
 
 ##### Ej 5 
 
@@ -131,7 +155,8 @@ para ver si podiamos conectarnos a la terminal del back-end pero no fue posible.
 
 Finalmete sqlmap crea un archivo llamado log que almacena todo el output obtenido de las distintas corridas del programa. adjuntamos este archivo en la carpeta ej3 con el output obtenido de distintas ejecuciones. En este resumen incluimos todas las que nos devolvieron informacion util.
 
-
-
-
-
+##### Ej 6
+###### A)
+La flag es: flag{ThIs_Even_PaSsED_c0d3_rewVIEW}
+###### B)
+El primer error es obviamente que el codigo entero del servidor se encuentra en robots.txt . Esto lo encontramos gracias a la pista en el ejercicio y corriendo `wget -r -l0 http://143.0.100.198:5001/` lo cual nos mostro que no habia mucho mas que fuentes y el robots.txt por lo que cuando lo fuimos a investigar  encontramos todo el codigo del servidor. Alli vimos que el login parecia impenetrable, sabiamos el nombre de usuario pero no hay ninguna contraseña cuyo hash sha512 sea "hackshackshackshackshackshackshackshackshackshackshackshackshack" (lo probamos por si las dudas contra un diccionario). Leyendo un poco mas vimos que que un login exitoso seteaba una cookie auth que consistia en un objeto {user:"usuario", password:"contraseña", admin: True ,digest: "HAsh del resto de la cookie"} encodeado en hexadecimal. Ahora el digest deberia prevenir que nosotros armemos nuestra propia cookie sin embargo, a la hora de controlar el hash el codigo presenta un error. Dentro de un bloque de try se encuentra `cookie.pop("digest")` y leyendo la documentacion de python podemos ver que pop causa una excepcion KeyError si no se encuentra la key lo cual nos lleva al except del codigo que simplemente contiene un `pass` y el codigo continua, devuelve la cookie que le pasamos (ya no en hexa) y nos deja obtener la flag (si la cookie tenia un user, un admin:True, y no tiene digest para causar el KeyError). La cookie que usamos fue auth="7b2275736572223a2022504564726f222c202261646d696e223a20747275657d"
