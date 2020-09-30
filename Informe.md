@@ -1,3 +1,7 @@
+# Practico 2 seguridad 2020
+## Escalera Pedro, Imán Federico
+
+
 ##### Ej 1
 
 ###### A)
@@ -50,7 +54,7 @@ Ademas, una vez seteada esta cookie el la pagina falla con un error 500 mostrand
 
   
 
-`SyntaxError: Unexpected token F in JSON at position 79
+SyntaxError: Unexpected token F in JSON at position 79
 
 at JSON.parse (<anonymous>)
 
@@ -70,7 +74,7 @@ at /under/node_modules/express/lib/router/index.js:281:22
 
 at Function.process_params (/under/node_modules/express/lib/router/index.js:335:12)
 
-at next (/under/node_modules/express/lib/router/index.js:275:10)`
+at next (/under/node_modules/express/lib/router/index.js:275:10)
 
   
 
