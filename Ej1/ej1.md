@@ -33,7 +33,7 @@ Lo que significa que www.famaf.unc.edu.ar es un alias para el nombre de dominio 
 
   
 
-por ende famaf tiene la ip 200.16.17.123 y es de tipo a.
+por ende famaf tiene la ip 200.16.17.123 y es de tipo a y el host es ratri.famaf.unc.edu.ar (PTR).
 
   
 
@@ -153,6 +153,7 @@ y el 3ero con debian.
 
 Ademas, el sistema operativo es Linux Linux 3.X|4.X
 
+Visitando https://www.shodan.io/host/200.16.17.123 tambien se puede ver esta informacion.
   
 
 Corriendo whatweb obtuvimos una confirmación de que el ip de famaf es 200.16.17.123 y que están usando javascript pero no mucho mas.
@@ -160,5 +161,6 @@ Corriendo whatweb obtuvimos una confirmación de que el ip de famaf es 200.16.17
 Usando la herramienta dirb no pudimos encontrar o listar ningún endpoint.
 
   
+Usando el servicio web https://hostingchecker.com/ encontramos otra información como el nombre de la organización y la ubicación del ip.
 
-Finalmente usando el servicio web https://hostingchecker.com/ encontramos otra información como el nombre de la organización y la ubicación del ip.
+Para terminar usamos la herramineta https://hunter.io/ para buscar los emails de dicho dominio.
