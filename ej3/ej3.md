@@ -30,9 +30,11 @@ ej 1 y 2:
 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADCBA
 
 #### Challenge 03: 
-Este challenge no lo solucionamos de la misma forma que los anteriores. 
+Este challenge no se puede solucionar de la misma forma que los anteriores. 
 
-Lo que hicimos este caso es pisar el registro eip el cual contiene el Program counter, con la direccion del print dentro del if. para hacer esto solo debemos llenar el buf con 60 A lugo la cookie con 4 A, luego el registro ebp con 4 A mas obteniendo asi 68 A y luego ingresamos la direccion de memoria deseada para asi poder modificar el registro eip.
+El problema aqui es que gets no puede leer todo el contenido ya que luego de llenar el buf con 60 A no encotramos con que debemos mandar un 0x00 lo cual le indica a gets que debe dejar de leer, rompiendo asi nuestra forma de solucion.
+
+Lo que nos queda por hacer en este caso es pisar el registro eip el cual contiene el Program counter, con la direccion del print dentro del if. para hacer esto solo debemos llenar el buf con 60 A lugo la cookie con 4 A, luego el registro ebp con 4 A mas obteniendo asi 68 A y luego ingresa la direccion de memoria deseada para asi poder modificar el registro eip.
 La direccion de memoria deseada se puede obtener dentro de gdb con el comando: 
 
     disas main
