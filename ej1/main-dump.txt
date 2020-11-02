@@ -1,0 +1,70 @@
+229: int main (int argc, char **argv, char **envp);
+; var int32_t var_bp_8h @ ebp-0x8
+; arg char **envp @ ebp+0xc
+; var int32_t var_4h @ esp+0x4
+; var int32_t var_8h @ esp+0x8
+; var int32_t var_1ch @ esp+0x1c
+; var int32_t var_28h @ esp+0x28
+; var int32_t var_2ch @ esp+0x2c
+; var int32_t var_ach @ esp+0xac
+0x0000066c      push    ebp
+0x0000066d      mov     ebp, esp
+0x0000066f      push    esi
+0x00000670      push    ebx
+0x00000671      and     esp, 0xfffffff0
+0x00000674      sub     esp, 0xb0
+0x0000067a      call    __i686.get_pc_thunk.bx ; sym.__i686.get_pc_thunk.bx
+0x0000067f      add     ebx, 0x1975
+0x00000685      mov     eax, dword [envp]
+0x00000688      mov     dword [var_1ch], eax
+0x0000068c      mov     eax, dword gs:[0x14]
+0x00000692      mov     dword [var_ach], eax
+0x00000699      xor     eax, eax
+0x0000069b      lea     eax, main  ; 0x66c
+0x000006a1      mov     dword [esp], eax
+0x000006a4      call    srand      ; sym.imp.srand ; void srand(int seed)
+0x000006a9      mov     eax, dword [ebx - 0xc] ; 0x1fe8
+                                   ; reloc.stdin
+0x000006af      mov     eax, dword [eax]
+0x000006b1      mov     dword [var_8h], eax
+0x000006b5      mov     dword [var_4h], 0x80
+0x000006bd      lea     eax, [var_2ch]
+0x000006c1      mov     dword [esp], eax
+0x000006c4      call    fgets      ; sym.imp.fgets ; char *fgets(char *s, int size, FILE *stream)
+0x000006c9      mov     dword [var_28h], 0
+0x000006d1      jmp     0x706
+0x000006d3      lea     eax, [var_2ch]
+0x000006d7      add     eax, dword [var_28h]
+0x000006db      movzx   eax, byte [eax]
+0x000006de      movsx   esi, al
+0x000006e1      call    rand       ; sym.imp.rand ; int rand(void)
+0x000006e6      and     eax, 0xff
+0x000006eb      mov     edx, esi
+0x000006ed      xor     edx, eax
+0x000006ef      lea     eax, str.02x ; 0x85c
+0x000006f5      mov     dword [var_4h], edx
+0x000006f9      mov     dword [esp], eax
+0x000006fc      call    printf     ; sym.imp.printf ; int printf(const char *format)
+0x00000701      add     dword [var_28h], 1
+0x00000706      lea     eax, [var_2ch]
+0x0000070a      add     eax, dword [var_28h]
+0x0000070e      movzx   eax, byte [eax]
+0x00000711      test    al, al
+0x00000713      je      0x724
+0x00000715      lea     eax, [var_2ch]
+0x00000719      add     eax, dword [var_28h]
+0x0000071d      movzx   eax, byte [eax]
+0x00000720      cmp     al, 0xa
+0x00000722      jne     0x6d3
+0x00000724      mov     dword [esp], 0xa
+0x0000072b      call    putchar    ; sym.imp.putchar ; int putchar(int c)
+0x00000730      mov     eax, 0
+0x00000735      mov     edx, dword [var_ach]
+0x0000073c      xor     edx, dword gs:[0x14]
+0x00000743      je      0x74a
+0x00000745      call    __stack_chk_fail_local ; sym.__stack_chk_fail_local
+0x0000074a      lea     esp, [var_bp_8h]
+0x0000074d      pop     ebx
+0x0000074e      pop     esi
+0x0000074f      pop     ebp
+0x00000750      ret
