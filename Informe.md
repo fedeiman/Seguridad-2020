@@ -12,7 +12,7 @@ Para comenzar el ejercicio 1 lo primero que hicimos fue descargar zzuf y el pars
 ### Ej 2
 
 ##### Manticore
-
+Primero intentamos resolver el problema con amnticore que a simple vista parecia mas simple que angr, llegando a afirmar que incluso lanzar `manticore ./r1` podia alcanzar para resolver el binario con ejecucion simbolica. Como suelen ser las cosas en la vida, no fue tan simple, primero tuvimos errores extraños de variables no reconocidas que descubrimos que se debia a un bug en la ultima version de manticore y el procesamiento multinucleo. Luego intentamos con la release anterior pero se tomo horas y no lo resolvio. Finalmente intentamos agregar constraints como la direccion a la que queriamos llegar y el largo de inputs pero de vuelta se tomo horas y no lo resolvio (dejamos el archivo que usamos con amnticore igual en la repo). Por esto decidimos intentar resolver el problema con Angr.
   
 
 ##### Angr
